@@ -151,12 +151,8 @@
 		2C0A7E0A286E08EC00E6A9F1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2C134F09286E378C00BED901 /* NetworkWeatherManager.swift */,
-				2C134F0D286E394B00BED901 /* NetworkQuoteManager.swift */,
-				2C134F0F286E42F700BED901 /* CurrentWeatherData.swift */,
-				2C134F11286E465600BED901 /* RandomQuoteData.swift */,
-				2C134F13286E497200BED901 /* CurrentWeather.swift */,
-				2C134F15286E4C2100BED901 /* RandomQuote.swift */,
+				2CC76B482870F0BC0092B9F5 /* quoteNetwork */,
+				2CC76B472870F0960092B9F5 /* weatherNetwork */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -178,6 +174,26 @@
 				2C134F0B286E38B900BED901 /* Constants.swift */,
 			);
 			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		2CC76B472870F0960092B9F5 /* weatherNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				2C134F09286E378C00BED901 /* NetworkWeatherManager.swift */,
+				2C134F13286E497200BED901 /* CurrentWeather.swift */,
+				2C134F0F286E42F700BED901 /* CurrentWeatherData.swift */,
+			);
+			path = weatherNetwork;
+			sourceTree = "<group>";
+		};
+		2CC76B482870F0BC0092B9F5 /* quoteNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				2C134F0D286E394B00BED901 /* NetworkQuoteManager.swift */,
+				2C134F11286E465600BED901 /* RandomQuoteData.swift */,
+				2C134F15286E4C2100BED901 /* RandomQuote.swift */,
+			);
+			path = quoteNetwork;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
