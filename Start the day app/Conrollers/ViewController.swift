@@ -9,14 +9,13 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController {
+    private var weatherImage = UIImage()
+    private let weatherStackView = WeatherStackView()
+    private let searchStackView = SearchStackView()
     
-    
-    @IBOutlet weak var weatherImage: UIImageView!
-    @IBOutlet weak var temperature: UILabel!
-    @IBOutlet weak var feelsLikeTemperature: UILabel!
-    @IBOutlet weak var quote: UILabel!
-    @IBOutlet weak var cityName: UILabel!
-    @IBOutlet weak var searchCityButton: UIButton!
+//    @IBOutlet weak var quote: UILabel!
+//    @IBOutlet weak var cityName: UILabel!
+//    @IBOutlet weak var searchCityButton: UIButton!
     
     var networkWeatherManager = NetworkWeatherManager()
     var networkQuoteManager = NetworkQuoteManager()
@@ -30,11 +29,15 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchCityButton.layer.cornerRadius = 15
+        view.largeContentImage = UIImage(named: "background")
+        setUpSearchStackViewUI()
+        searchStackView.searchButton.addTarget(
+            self, action: #selector(searchButtonTapped(_:)), for: .touchUpInside
+        )
         
-        networkQuoteManager.onComplition = { [weak self] randomQuote in
-            self?.updateInterfaceWith(randomQuote: randomQuote)
-        }
+//        networkQuoteManager.onComplition = { [weak self] randomQuote in
+//            self?.updateInterfaceWith(randomQuote: randomQuote)
+//        }
         networkQuoteManager.fetchRandomQuote()
         
         networkWeatherManager.onComplition = { [weak self] currenWeather in
@@ -44,24 +47,35 @@ class ViewController: UIViewController {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestLocation()
             
+        } else {
+            networkWeatherManager.fetchCurrentWeather(
+                forCity: randomCities.randomElement() ?? "Moscow"
+            )
         }
-        
-        networkWeatherManager.fetchCurrentWeather(forCity: "Moscow") 
     }
     
     
-    @IBAction func buttonTapped(_ sender: UIButton) {
-        presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { [unowned self] cityName in
+    @objc private func searchButtonTapped(_ sender: UIButton) {
+        presentSearchAlertController(
+            withTitle: "Enter city name",
+            message: nil,
+            style: .alert
+        ) { [unowned self] cityName in
             self.networkWeatherManager.fetchCurrentWeather(forCity: cityName) 
         }
     }
     
-    func presentSearchAlertController(withTitle title: String?, message: String?, style: UIAlertController.Style, completionHandler: @escaping (String) -> Void) {
+    private func presentSearchAlertController(
+        withTitle title: String?,
+        message: String?,
+        style: UIAlertController.Style,
+        completionHandler: @escaping (String) -> Void)
+    {
         
         let allertController = UIAlertController(title: title, message: message, preferredStyle: style)
         
         allertController.addTextField(configurationHandler: { textField in
-            textField.placeholder = randomCities.randomElement() // randomCities from Constants
+            textField.placeholder = randomCities.randomElement()
         })
         
         let search = UIAlertAction(title: "Search", style: .default) { action in
@@ -79,44 +93,37 @@ class ViewController: UIViewController {
         allertController.addAction(cancel)
         present(allertController, animated: true)
     }
-    
-    
 }
 
-// MARK: - Updating Interface
+extension ViewController {
+    private func setUpSearchStackViewUI() {
+        view.addSubview(searchStackView)
+        
+        searchStackView.trailingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 10
+        ).isActive = true
+        searchStackView.bottomAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10
+        ).isActive = true
+    }
+}
+
 
 extension ViewController {
     func updateInterfaceWith(weather: CurrentWeather) {
         DispatchQueue.main.async {
-            self.cityName.text = weather.cityName + "  "
-            self.temperature.text = weather.temperatureString + " °C"
-            self.feelsLikeTemperature.text = "feels like " + weather.feelsLikeTemperatureString + " °C";
-            self.weatherImage.image = UIImage(systemName: weather.systemIconNameString)
+            self.searchStackView.updateUI(with: weather.cityName)
+            self.weatherStackView.updateUI(with: weather)
+            self.weatherImage = UIImage(systemName: weather.systemIconNameString)
+                ?? UIImage()
         }
     }
     
-    func updateInterfaceWith(randomQuote: RandomQuote) {
-        DispatchQueue.main.async {
-            self.quote.text = randomQuote.quote
-        }
-    }
+//    func updateInterfaceWith(randomQuote: RandomQuote) {
+//        DispatchQueue.main.async {
+//            self.quote.text = randomQuote.quote
+//        }
+//    }
 }
 
-// MARK: - CLLocationManagerDelegate
-
-extension ViewController : CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        
-        let lat = location.coordinate.latitude
-        let lon = location.coordinate.longitude
-        
-        networkWeatherManager.fetchCurrentWeather(withLatitude: lat, withLongitude: lon)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print(error)
-    }
-}
 

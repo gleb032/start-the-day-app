@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct CurrentWeather {
+struct CurrentWeather: TemperatureString {
     let cityName: String
     
     let temperature: Double

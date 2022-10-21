@@ -22,7 +22,6 @@ struct NetworkQuoteManager {
             if let dataSafe = data {
                 if let randomQuote = self.parseJSON(withData: dataSafe) {
                     self.onComplition?(randomQuote)
-//                    print(randomQuote.quote)
                 }
             }
         }
@@ -37,8 +36,7 @@ struct NetworkQuoteManager {
                 return nil
             }
             return randomQuote
-        } catch let error as NSError {
-//            print("!!!!!!!!!!!!")
+        } catch {
             print(error)
         }
         return nil

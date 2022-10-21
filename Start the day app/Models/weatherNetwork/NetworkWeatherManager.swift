@@ -31,7 +31,6 @@ class NetworkWeatherManager  {
                 if let currentWeather = self.parseJSON(withData: data) {
                     self.onComplition?(currentWeather)
                 }
-                
             }
         }
         task.resume()
