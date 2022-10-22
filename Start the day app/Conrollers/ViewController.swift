@@ -9,17 +9,17 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController {
-    private var weatherImage = UIImage()
+    private let weatherImage: UIImageView = {
+        let iv = UIImageView()
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
     private let weatherStackView = WeatherStackView()
     private let searchStackView = SearchStackView()
     
-//    @IBOutlet weak var quote: UILabel!
-//    @IBOutlet weak var cityName: UILabel!
-//    @IBOutlet weak var searchCityButton: UIButton!
-    
-    var networkWeatherManager = NetworkWeatherManager()
-    var networkQuoteManager = NetworkQuoteManager()
-    lazy var locationManager: CLLocationManager = {
+    let networkWeatherManager = NetworkWeatherManager()
+    let networkQuoteManager = NetworkQuoteManager()
+    private lazy var locationManager: CLLocationManager = {
         let lm = CLLocationManager()
         lm.delegate = self
         lm.desiredAccuracy = kCLLocationAccuracyKilometer
@@ -29,16 +29,20 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.largeContentImage = UIImage(named: "background")
-        setUpSearchStackViewUI()
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "background") ?? UIImage())
+        
+        setUpSearchStackViewLayout()
         searchStackView.searchButton.addTarget(
             self, action: #selector(searchButtonTapped(_:)), for: .touchUpInside
         )
         
+        setUpWeatherImageUI()
+        setUpWeatherStackViewLayout()
+        
 //        networkQuoteManager.onComplition = { [weak self] randomQuote in
 //            self?.updateInterfaceWith(randomQuote: randomQuote)
 //        }
-        networkQuoteManager.fetchRandomQuote()
+//        networkQuoteManager.fetchRandomQuote()
         
         networkWeatherManager.onComplition = { [weak self] currenWeather in
             self?.updateInterfaceWith(weather: currenWeather)
@@ -46,14 +50,12 @@ class ViewController: UIViewController {
         
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestLocation()
-            
         } else {
             networkWeatherManager.fetchCurrentWeather(
                 forCity: randomCities.randomElement() ?? "Moscow"
             )
         }
     }
-    
     
     @objc private func searchButtonTapped(_ sender: UIButton) {
         presentSearchAlertController(
@@ -96,26 +98,56 @@ class ViewController: UIViewController {
 }
 
 extension ViewController {
-    private func setUpSearchStackViewUI() {
+    private func setUpSearchStackViewLayout() {
         view.addSubview(searchStackView)
         
         searchStackView.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 10
+            equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
         searchStackView.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 10
+            equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 20
+        ).isActive = true
+    }
+    
+    private func setUpWeatherStackViewLayout() {
+        view.addSubview(weatherStackView)
+
+        weatherStackView.topAnchor.constraint(
+            equalTo: weatherImage.bottomAnchor, constant: 30
+        ).isActive = true
+        weatherStackView.centerXAnchor.constraint(
+            equalTo: view.centerXAnchor
+        ).isActive = true
+    }
+    
+    private func setUpWeatherImageUI() {
+        view.addSubview(weatherImage)
+        
+        weatherImage.image = UIImage(named: "no.internet.connection")
+        
+        weatherImage.heightAnchor.constraint(
+            equalToConstant: 250
+        ).isActive = true
+        weatherImage.widthAnchor.constraint(
+            equalTo: weatherImage.heightAnchor
+        ).isActive = true
+        weatherImage.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30
+        ).isActive = true
+        weatherImage.centerXAnchor.constraint(
+            equalTo: view.centerXAnchor
         ).isActive = true
     }
 }
 
-
 extension ViewController {
-    func updateInterfaceWith(weather: CurrentWeather) {
+    private func updateInterfaceWith(weather: CurrentWeather) {
         DispatchQueue.main.async {
             self.searchStackView.updateUI(with: weather.cityName)
             self.weatherStackView.updateUI(with: weather)
-            self.weatherImage = UIImage(systemName: weather.systemIconNameString)
-                ?? UIImage()
+            self.weatherImage.image = UIImage(
+                systemName: weather.systemIconNameString
+            )
         }
     }
     

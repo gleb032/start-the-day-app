@@ -12,10 +12,10 @@ protocol TemperatureString {
     var feelsLikeTemperatureString: String { get }
 }
 
-class WeatherStackView: UIStackView {
+final class WeatherStackView: UIStackView {
     private var temperature: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "Tralala"
         label.textAlignment = .left
         label.isUserInteractionEnabled = false
         label.font = .systemFont(ofSize: 20)
@@ -23,7 +23,7 @@ class WeatherStackView: UIStackView {
     }()
     private var feelsLikeTemperature: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = "Hey"
         label.textAlignment = .right
         label.isUserInteractionEnabled = false
         label.font = .systemFont(ofSize: 13)
@@ -32,17 +32,22 @@ class WeatherStackView: UIStackView {
 
     init() {
         super.init(frame: .zero)
-    }
-    
-    init(weather: TemperatureString) {
-        super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         axis = .vertical
         spacing = 10
         addArrangedSubview(temperature)
         addArrangedSubview(feelsLikeTemperature)
-        updateUI(with: weather)
     }
+    
+//    init(weather: TemperatureString) {
+//        super.init(frame: .zero)
+//        translatesAutoresizingMaskIntoConstraints = false
+//        axis = .vertical
+//        spacing = 10
+//        addArrangedSubview(temperature)
+//        addArrangedSubview(feelsLikeTemperature)
+//        updateUI(with: weather)
+//    }
 
     func updateUI(with weather: TemperatureString) {
         temperature.text = weather.temperatureString + " °C"

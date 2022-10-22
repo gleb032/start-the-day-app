@@ -26,8 +26,11 @@ class SearchStackView: UIStackView {
     }()
     let searchButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+        button.setImage(
+            UIImage(systemName: "magnifyingglass")?.withTintColor(.blue), for: .normal
+        )
         button.frame.size = CGSize(width: 20, height: 20)
+        button.layer.cornerRadius = button.frame.height / 2
         return button
     }()
     private let stackView: UIStackView = {
@@ -43,8 +46,8 @@ class SearchStackView: UIStackView {
         axis = .vertical
         spacing = 5
         
-        stackView.addArrangedSubview(searchButton)
         stackView.addArrangedSubview(cityName)
+        stackView.addArrangedSubview(searchButton)
         
         addArrangedSubview(weaterLabel)
         addArrangedSubview(stackView)
