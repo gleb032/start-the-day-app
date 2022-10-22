@@ -1,0 +1,6 @@
+framework module Pods_Start_the_day_app_Start_the_day_appUITests {
+  umbrella header "Pods-Start the day app-Start the day appUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
