@@ -111,8 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				2C0A7DD8286E014B00E6A9F1 /* Start the day app */,
-				2C0A7DEF286E014C00E6A9F1 /* Start the day appTests */,
-				2C0A7DF9286E014D00E6A9F1 /* Start the day appUITests */,
+				2C0A7DEF286E014C00E6A9F1 /* Start_the_day_appTests */,
+				2C0A7DF9286E014D00E6A9F1 /* Start_the_day_appUITests */,
 				2C0A7DD7286E014B00E6A9F1 /* Products */,
 				E048E544B785B65BF50EB41E /* Pods */,
 				D2B80721F4467A3D855A8DD3 /* Frameworks */,
@@ -141,21 +141,21 @@
 			path = "Start the day app";
 			sourceTree = "<group>";
 		};
-		2C0A7DEF286E014C00E6A9F1 /* Start the day appTests */ = {
+		2C0A7DEF286E014C00E6A9F1 /* Start_the_day_appTests */ = {
 			isa = PBXGroup;
 			children = (
 				2C0A7DF0286E014C00E6A9F1 /* Start_the_day_appTests.swift */,
 			);
-			path = "Start the day appTests";
+			path = Start_the_day_appTests;
 			sourceTree = "<group>";
 		};
-		2C0A7DF9286E014D00E6A9F1 /* Start the day appUITests */ = {
+		2C0A7DF9286E014D00E6A9F1 /* Start_the_day_appUITests */ = {
 			isa = PBXGroup;
 			children = (
 				2C0A7DFA286E014D00E6A9F1 /* Start_the_day_appUITests.swift */,
 				2C0A7DFC286E014D00E6A9F1 /* Start_the_day_appUITestsLaunchTests.swift */,
 			);
-			path = "Start the day appUITests";
+			path = Start_the_day_appUITests;
 			sourceTree = "<group>";
 		};
 		2C0A7E09286E08D400E6A9F1 /* Views */ = {
