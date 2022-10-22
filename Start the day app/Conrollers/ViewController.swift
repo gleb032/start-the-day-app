@@ -8,11 +8,23 @@
 import UIKit
 import CoreLocation
 
+// TODO: Update UI: Fonts, colors, sizes e.t.c.
 class ViewController: UIViewController {
     private let weatherImage: UIImageView = {
         let iv = UIImageView()
+        iv.image = UIImage(named: "no.internet.connection")
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
+    }()
+    // TODO: Make Factory for Labels ?
+    private let randomeQuoteLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Quote"
+        label.textAlignment = .left
+        label.isUserInteractionEnabled = false
+        label.font = .systemFont(ofSize: 35)
+        return label
     }()
     private let weatherStackView = WeatherStackView()
     private let searchStackView = SearchStackView()
@@ -36,8 +48,9 @@ class ViewController: UIViewController {
             self, action: #selector(searchButtonTapped(_:)), for: .touchUpInside
         )
 
-        setUpWeatherImageUI()
+        setUpWeatherImageLayout()
         setUpWeatherStackViewLayout()
+        setUpRandomeQuoteLayout()
 
 //        networkQuoteManager.onComplition = { [weak self] randomQuote in
 //            self?.updateInterfaceWith(randomQuote: randomQuote)
@@ -107,6 +120,23 @@ extension ViewController {
             equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 20
         ).isActive = true
     }
+    
+    private func setUpRandomeQuoteLayout() {
+        view.addSubview(randomeQuoteLabel)
+        
+        randomeQuoteLabel.leadingAnchor.constraint(
+            equalTo: view.leadingAnchor, constant: 30
+        ).isActive = true
+        randomeQuoteLabel.trailingAnchor.constraint(
+            equalTo: view.trailingAnchor, constant: -30
+        ).isActive = true
+        randomeQuoteLabel.heightAnchor.constraint(
+            equalToConstant: 70
+        ).isActive = true
+        randomeQuoteLabel.topAnchor.constraint(
+            equalTo: weatherStackView.bottomAnchor, constant: 30
+        ).isActive = true
+    }
 
     private func setUpWeatherStackViewLayout() {
         view.addSubview(weatherStackView)
@@ -119,10 +149,8 @@ extension ViewController {
         ).isActive = true
     }
 
-    private func setUpWeatherImageUI() {
+    private func setUpWeatherImageLayout() {
         view.addSubview(weatherImage)
-
-        weatherImage.image = UIImage(named: "no.internet.connection")
 
         weatherImage.heightAnchor.constraint(
             equalToConstant: 250
