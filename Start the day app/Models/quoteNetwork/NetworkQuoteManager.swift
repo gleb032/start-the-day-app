@@ -7,18 +7,17 @@
 
 import Foundation
 
-
 struct NetworkQuoteManager {
-    
+
     var onComplition: ((RandomQuote) -> Void)?
-    
+
     func fetchRandomQuote() {
         let urlString = "https://zenquotes.io/api/random?"
-        
+
         guard let url = URL(string: urlString) else { return }
         let session = URLSession(configuration: .default)
-        
-        let task = session.dataTask(with: url) { data, response, error in
+
+        let task = session.dataTask(with: url) { data, _, _ in
             if let dataSafe = data {
                 if let randomQuote = self.parseJSON(withData: dataSafe) {
                     self.onComplition?(randomQuote)
@@ -27,7 +26,7 @@ struct NetworkQuoteManager {
         }
         task.resume()
     }
-    
+
     func parseJSON(withData data: Data) -> RandomQuote? {
         let decoder = JSONDecoder()
         do {

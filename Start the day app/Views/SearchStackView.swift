@@ -39,20 +39,20 @@ class SearchStackView: UIStackView {
         sv.spacing = 5
         return sv
     }()
-    
+
     init() {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         axis = .vertical
         spacing = 5
-        
+
         stackView.addArrangedSubview(cityName)
         stackView.addArrangedSubview(searchButton)
-        
+
         addArrangedSubview(weaterLabel)
         addArrangedSubview(stackView)
     }
-    
+
     func updateUI(with name: String) {
         cityName.text = name
     }

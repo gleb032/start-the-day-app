@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     }()
     private let weatherStackView = WeatherStackView()
     private let searchStackView = SearchStackView()
-    
+
     let networkWeatherManager = NetworkWeatherManager()
     let networkQuoteManager = NetworkQuoteManager()
     private lazy var locationManager: CLLocationManager = {
@@ -26,28 +26,28 @@ class ViewController: UIViewController {
         lm.requestAlwaysAuthorization()
         return lm
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(patternImage: UIImage(named: "background") ?? UIImage())
-        
+
         setUpSearchStackViewLayout()
         searchStackView.searchButton.addTarget(
             self, action: #selector(searchButtonTapped(_:)), for: .touchUpInside
         )
-        
+
         setUpWeatherImageUI()
         setUpWeatherStackViewLayout()
-        
+
 //        networkQuoteManager.onComplition = { [weak self] randomQuote in
 //            self?.updateInterfaceWith(randomQuote: randomQuote)
 //        }
 //        networkQuoteManager.fetchRandomQuote()
-        
+
         networkWeatherManager.onComplition = { [weak self] currenWeather in
             self?.updateInterfaceWith(weather: currenWeather)
         }
-        
+
         if CLLocationManager.locationServicesEnabled() {
             locationManager.requestLocation()
         } else {
@@ -56,31 +56,30 @@ class ViewController: UIViewController {
             )
         }
     }
-    
+
     @objc private func searchButtonTapped(_ sender: UIButton) {
         presentSearchAlertController(
             withTitle: "Enter city name",
             message: nil,
             style: .alert
         ) { [unowned self] cityName in
-            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName) 
+            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
         }
     }
-    
+
     private func presentSearchAlertController(
         withTitle title: String?,
         message: String?,
         style: UIAlertController.Style,
-        completionHandler: @escaping (String) -> Void)
-    {
-        
+        completionHandler: @escaping (String) -> Void) {
+
         let allertController = UIAlertController(title: title, message: message, preferredStyle: style)
-        
+
         allertController.addTextField(configurationHandler: { textField in
             textField.placeholder = randomCities.randomElement()
         })
-        
-        let search = UIAlertAction(title: "Search", style: .default) { action in
+
+        let search = UIAlertAction(title: "Search", style: .default) { _ in
             let textField = allertController.textFields?.first
             guard let cityName = textField?.text else { return }
             if !cityName.isEmpty {
@@ -88,9 +87,9 @@ class ViewController: UIViewController {
                 completionHandler(city)
             }
         }
-        
+
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        
+
         allertController.addAction(search)
         allertController.addAction(cancel)
         present(allertController, animated: true)
@@ -100,7 +99,7 @@ class ViewController: UIViewController {
 extension ViewController {
     private func setUpSearchStackViewLayout() {
         view.addSubview(searchStackView)
-        
+
         searchStackView.trailingAnchor.constraint(
             equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
@@ -108,7 +107,7 @@ extension ViewController {
             equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 20
         ).isActive = true
     }
-    
+
     private func setUpWeatherStackViewLayout() {
         view.addSubview(weatherStackView)
 
@@ -119,12 +118,12 @@ extension ViewController {
             equalTo: view.centerXAnchor
         ).isActive = true
     }
-    
+
     private func setUpWeatherImageUI() {
         view.addSubview(weatherImage)
-        
+
         weatherImage.image = UIImage(named: "no.internet.connection")
-        
+
         weatherImage.heightAnchor.constraint(
             equalToConstant: 250
         ).isActive = true
@@ -150,12 +149,10 @@ extension ViewController {
             )
         }
     }
-    
+
 //    func updateInterfaceWith(randomQuote: RandomQuote) {
 //        DispatchQueue.main.async {
 //            self.quote.text = randomQuote.quote
 //        }
 //    }
 }
-
-

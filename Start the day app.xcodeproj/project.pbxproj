@@ -246,7 +246,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C0A7E00286E014D00E6A9F1 /* Build configuration list for PBXNativeTarget "Start the day app" */;
 			buildPhases = (
-				2CE31F6829046D2100D8A360 /* Run Script */,
+				2CE31F6829046D2100D8A360 /* SwiftLint Build */,
 				C209369811855FBC34E2E3FB /* [CP] Check Pods Manifest.lock */,
 				2C0A7DD2286E014B00E6A9F1 /* Sources */,
 				2C0A7DD3286E014B00E6A9F1 /* Frameworks */,
@@ -368,7 +368,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2CE31F6829046D2100D8A360 /* Run Script */ = {
+		2CE31F6829046D2100D8A360 /* SwiftLint Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
@@ -377,14 +377,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Run Script";
+			name = "SwiftLint Build";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		54542616819FC0C408BE2D56 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

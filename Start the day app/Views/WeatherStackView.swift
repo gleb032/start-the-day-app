@@ -38,7 +38,7 @@ final class WeatherStackView: UIStackView {
         addArrangedSubview(temperature)
         addArrangedSubview(feelsLikeTemperature)
     }
-    
+
 //    init(weather: TemperatureString) {
 //        super.init(frame: .zero)
 //        translatesAutoresizingMaskIntoConstraints = false
@@ -53,10 +53,9 @@ final class WeatherStackView: UIStackView {
         temperature.text = weather.temperatureString + " °C"
         feelsLikeTemperature.text = "Feels like " + weather.feelsLikeTemperatureString + " °C"
     }
-    
+
     @available(*, unavailable)
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-

@@ -7,20 +7,19 @@
 
 import Foundation
 
-
 struct CurrentWeather: TemperatureString {
     let cityName: String
-    
+
     let temperature: Double
     var temperatureString: String {
         return "\(temperature.rounded())"
     }
-    
+
     let feelsLikeTemperature: Double
     var feelsLikeTemperatureString: String {
         return "\(feelsLikeTemperature.rounded())"
     }
-    
+
     let id: Int
     var systemIconNameString: String {
         switch id {
@@ -42,7 +41,7 @@ struct CurrentWeather: TemperatureString {
                 return "nosign"
         }
     }
-    
+
     init?(currentWeatherData: CurrentWeatherData) {
         cityName = currentWeatherData.name
         temperature = currentWeatherData.main.temp

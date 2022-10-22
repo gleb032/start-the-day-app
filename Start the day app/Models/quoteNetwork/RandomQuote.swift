@@ -10,7 +10,7 @@ import Foundation
 struct RandomQuote {
     let quote: String
     let author: String
-    
+
     init?(randomQuoteData: RandomQuoteData) {
         quote = randomQuoteData.quote
         author = randomQuoteData.author
