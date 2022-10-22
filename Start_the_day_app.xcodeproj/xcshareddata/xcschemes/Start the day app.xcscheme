@@ -17,7 +17,7 @@
                BlueprintIdentifier = "2C0A7DD5286E014B00E6A9F1"
                BuildableName = "Start the day app.app"
                BlueprintName = "Start the day app"
-               ReferencedContainer = "container:Start the day app.xcodeproj">
+               ReferencedContainer = "container:Start_the_day_app.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "2C0A7DEB286E014C00E6A9F1"
                BuildableName = "Start the day appTests.xctest"
                BlueprintName = "Start the day appTests"
-               ReferencedContainer = "container:Start the day app.xcodeproj">
+               ReferencedContainer = "container:Start_the_day_app.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "2C0A7DF5286E014D00E6A9F1"
                BuildableName = "Start the day appUITests.xctest"
                BlueprintName = "Start the day appUITests"
-               ReferencedContainer = "container:Start the day app.xcodeproj">
+               ReferencedContainer = "container:Start_the_day_app.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -67,7 +67,7 @@
             BlueprintIdentifier = "2C0A7DD5286E014B00E6A9F1"
             BuildableName = "Start the day app.app"
             BlueprintName = "Start the day app"
-            ReferencedContainer = "container:Start the day app.xcodeproj">
+            ReferencedContainer = "container:Start_the_day_app.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -84,7 +84,7 @@
             BlueprintIdentifier = "2C0A7DD5286E014B00E6A9F1"
             BuildableName = "Start the day app.app"
             BlueprintName = "Start the day app"
-            ReferencedContainer = "container:Start the day app.xcodeproj">
+            ReferencedContainer = "container:Start_the_day_app.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
