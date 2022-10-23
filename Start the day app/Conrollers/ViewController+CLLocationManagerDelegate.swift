@@ -1,8 +1,8 @@
 //
-//  ViewControlles+CLLocationManagerDelegate.swift
+//  ViewController+CLLocationManagerDelegate.swift
 //  Start the day app
 //
-//  Created by Глеб Фандеев on 21.10.2022.
+//  Created by Глеб Фандеев on 23.10.2022.
 //
 
 import Foundation

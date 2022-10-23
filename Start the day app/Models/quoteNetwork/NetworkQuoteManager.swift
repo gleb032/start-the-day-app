@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NetworkQuoteManager {
+final class NetworkQuoteManager {
 
     var onComplition: ((RandomQuote) -> Void)?
 

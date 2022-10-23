@@ -8,28 +8,14 @@
 import UIKit
 
 class SearchStackView: UIStackView {
-    private let weaterLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Weather"
-        label.isUserInteractionEnabled = false
-        label.textAlignment = .left
-        label.font = .systemFont(ofSize: 12)
-        return label
-    }()
-    private let cityName: UILabel = {
-        let label = UILabel()
-        label.text = "City"
-        label.isUserInteractionEnabled = false
-        label.textAlignment = .left
-        label.font = .systemFont(ofSize: 12)
-        return label
-    }()
+    private let weaterLabel = LabelFactory.makeLabel(text: "Search")
+    private let cityName = LabelFactory.makeLabel(text: "City")
     let searchButton: UIButton = {
         let button = UIButton()
         button.setImage(
-            UIImage(systemName: "magnifyingglass")?.withTintColor(.blue), for: .normal
+            UIImage(systemName: "magnifyingglass"), for: .normal
         )
-        button.frame.size = CGSize(width: 20, height: 20)
+        button.frame.size = CGSize(width: 40, height: 40)
         button.layer.cornerRadius = button.frame.height / 2
         return button
     }()

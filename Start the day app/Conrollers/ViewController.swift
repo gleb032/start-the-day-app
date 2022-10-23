@@ -8,29 +8,19 @@
 import UIKit
 import CoreLocation
 
-// TODO: Update UI: Fonts, colors, sizes e.t.c.
 class ViewController: UIViewController {
+    private let randomQuoteLabel = LabelFactory.makeLabel(text: "Hey", font: .italicSystemFont(ofSize: 25))
+    private let weatherStackView = WeatherStackView()
+    private let searchStackView = SearchStackView()
     private let weatherImage: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "no.internet.connection")
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
-    // TODO: Make Factory for Labels ?
-    private let randomeQuoteLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Quote"
-        label.textAlignment = .left
-        label.isUserInteractionEnabled = false
-        label.font = .systemFont(ofSize: 35)
-        return label
-    }()
-    private let weatherStackView = WeatherStackView()
-    private let searchStackView = SearchStackView()
 
     let networkWeatherManager = NetworkWeatherManager()
-    let networkQuoteManager = NetworkQuoteManager()
+    private let networkQuoteManager = NetworkQuoteManager()
     private lazy var locationManager: CLLocationManager = {
         let lm = CLLocationManager()
         lm.delegate = self
@@ -42,8 +32,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(patternImage: UIImage(named: "background") ?? UIImage())
-
-        setUpSearchStackViewLayout()
         searchStackView.searchButton.addTarget(
             self, action: #selector(searchButtonTapped(_:)), for: .touchUpInside
         )
@@ -51,11 +39,12 @@ class ViewController: UIViewController {
         setUpWeatherImageLayout()
         setUpWeatherStackViewLayout()
         setUpRandomeQuoteLayout()
+        setUpSearchStackViewLayout()
 
-//        networkQuoteManager.onComplition = { [weak self] randomQuote in
-//            self?.updateInterfaceWith(randomQuote: randomQuote)
-//        }
-//        networkQuoteManager.fetchRandomQuote()
+        networkQuoteManager.onComplition = { [weak self] randomQuote in
+            self?.updateInterfaceWith(randomQuote: randomQuote)
+        }
+        networkQuoteManager.fetchRandomQuote()
 
         networkWeatherManager.onComplition = { [weak self] currenWeather in
             self?.updateInterfaceWith(weather: currenWeather)
@@ -79,35 +68,16 @@ class ViewController: UIViewController {
             self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
         }
     }
-
-    private func presentSearchAlertController(
-        withTitle title: String?,
-        message: String?,
-        style: UIAlertController.Style,
-        completionHandler: @escaping (String) -> Void) {
-
-        let allertController = UIAlertController(title: title, message: message, preferredStyle: style)
-
-        allertController.addTextField(configurationHandler: { textField in
-            textField.placeholder = randomCities.randomElement()
-        })
-
-        let search = UIAlertAction(title: "Search", style: .default) { _ in
-            let textField = allertController.textFields?.first
-            guard let cityName = textField?.text else { return }
-            if !cityName.isEmpty {
-                let city = cityName.split(separator: " ").joined(separator: "%20")
-                completionHandler(city)
-            }
-        }
-
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-
-        allertController.addAction(search)
-        allertController.addAction(cancel)
-        present(allertController, animated: true)
+    
+    private var viewHeight: CGFloat {
+        view.frame.height
+    }
+    private var viewWidth: CGFloat {
+        view.frame.width
     }
 }
+
+// MARK: UI set up
 
 extension ViewController {
     private func setUpSearchStackViewLayout() {
@@ -122,18 +92,18 @@ extension ViewController {
     }
     
     private func setUpRandomeQuoteLayout() {
-        view.addSubview(randomeQuoteLabel)
+        view.addSubview(randomQuoteLabel)
         
-        randomeQuoteLabel.leadingAnchor.constraint(
+        randomQuoteLabel.leadingAnchor.constraint(
             equalTo: view.leadingAnchor, constant: 30
         ).isActive = true
-        randomeQuoteLabel.trailingAnchor.constraint(
+        randomQuoteLabel.trailingAnchor.constraint(
             equalTo: view.trailingAnchor, constant: -30
         ).isActive = true
-        randomeQuoteLabel.heightAnchor.constraint(
-            equalToConstant: 70
+        randomQuoteLabel.heightAnchor.constraint(
+            lessThanOrEqualToConstant: viewHeight * 1/4
         ).isActive = true
-        randomeQuoteLabel.topAnchor.constraint(
+        randomQuoteLabel.topAnchor.constraint(
             equalTo: weatherStackView.bottomAnchor, constant: 30
         ).isActive = true
     }
@@ -141,6 +111,7 @@ extension ViewController {
     private func setUpWeatherStackViewLayout() {
         view.addSubview(weatherStackView)
 
+        weatherStackView.backgroundColor = .white
         weatherStackView.topAnchor.constraint(
             equalTo: weatherImage.bottomAnchor, constant: 30
         ).isActive = true
@@ -167,6 +138,8 @@ extension ViewController {
     }
 }
 
+// MARK: UI update
+
 extension ViewController {
     private func updateInterfaceWith(weather: CurrentWeather) {
         DispatchQueue.main.async {
@@ -178,9 +151,9 @@ extension ViewController {
         }
     }
 
-//    func updateInterfaceWith(randomQuote: RandomQuote) {
-//        DispatchQueue.main.async {
-//            self.quote.text = randomQuote.quote
-//        }
-//    }
+    private func updateInterfaceWith(randomQuote: RandomQuote) {
+        DispatchQueue.main.async {
+            self.randomQuoteLabel.text = randomQuote.quote
+        }
+    }
 }

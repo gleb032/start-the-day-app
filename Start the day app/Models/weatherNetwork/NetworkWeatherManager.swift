@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class NetworkWeatherManager {
+final class NetworkWeatherManager {
 
     var onComplition: ((CurrentWeather) -> Void)?
 
@@ -26,7 +26,7 @@ class NetworkWeatherManager {
         guard let url = URL(string: urlString) else { return }
         let session = URLSession(configuration: .default)
 
-        let task = session.dataTask(with: url) { data, _, _ in
+        let task = session.dataTask(with: url) { data, respone, error in
             if let data = data {
                 if let currentWeather = self.parseJSON(withData: data) {
                     self.onComplition?(currentWeather)
