@@ -15,14 +15,14 @@ class SearchStackView: UIStackView {
         button.setImage(
             UIImage(systemName: "magnifyingglass"), for: .normal
         )
-        button.frame.size = CGSize(width: 40, height: 40)
+        button.frame.size = CGSize(width: 30, height: 30)
         button.layer.cornerRadius = button.frame.height / 2
         return button
     }()
     private let stackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
-        sv.spacing = 5
+        sv.spacing = 3
         return sv
     }()
 
@@ -30,7 +30,7 @@ class SearchStackView: UIStackView {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         axis = .vertical
-        spacing = 5
+        spacing = 1
 
         stackView.addArrangedSubview(cityName)
         stackView.addArrangedSubview(searchButton)

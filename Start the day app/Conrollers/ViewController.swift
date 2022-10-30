@@ -112,23 +112,25 @@ extension ViewController {
     private func setUpWeatherStackViewLayout() {
         view.addSubview(weatherStackView)
 
-        weatherStackView.backgroundColor = .white
         weatherStackView.topAnchor.constraint(
-            equalTo: weatherImage.bottomAnchor, constant: 30
+            equalTo: weatherImage.bottomAnchor, constant: 5
         ).isActive = true
         weatherStackView.centerXAnchor.constraint(
             equalTo: view.centerXAnchor
+        ).isActive = true
+        weatherStackView.widthAnchor.constraint(
+            equalTo: weatherImage.widthAnchor
         ).isActive = true
     }
 
     private func setUpWeatherImageLayout() {
         view.addSubview(weatherImage)
 
-        weatherImage.heightAnchor.constraint(
-            equalToConstant: 250
-        ).isActive = true
         weatherImage.widthAnchor.constraint(
-            equalTo: weatherImage.heightAnchor
+            equalToConstant: viewWidth * 3 / 4
+        ).isActive = true
+        weatherImage.heightAnchor.constraint(
+            equalTo: weatherImage.widthAnchor
         ).isActive = true
         weatherImage.topAnchor.constraint(
             equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30
