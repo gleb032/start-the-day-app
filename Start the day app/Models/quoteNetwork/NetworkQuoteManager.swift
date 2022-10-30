@@ -18,26 +18,23 @@ final class NetworkQuoteManager {
         let session = URLSession(configuration: .default)
 
         let task = session.dataTask(with: url) { data, _, _ in
-            if let dataSafe = data {
-                if let randomQuote = self.parseJSON(withData: dataSafe) {
+            if let data, let randomQuote = self.parseJSON(withData: data) {
                     self.onComplition?(randomQuote)
-                }
             }
         }
         task.resume()
     }
 
     func parseJSON(withData data: Data) -> RandomQuote? {
-        let decoder = JSONDecoder()
         do {
-            let randomQouteData = try decoder.decode([RandomQuoteData].self, from: data)
+            let randomQouteData = try JSONDecoder().decode([RandomQuoteData].self, from: data)
             guard let randomQuote = RandomQuote(randomQuoteData: randomQouteData[0]) else {
                 return nil
             }
             return randomQuote
         } catch {
-            print(error)
+            print(error.localizedDescription)
+            return nil
         }
-        return nil
     }
 }

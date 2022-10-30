@@ -32,6 +32,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(patternImage: UIImage(named: "background") ?? UIImage())
+        // TODO: Rewrite
         searchStackView.searchButton.addTarget(
             self, action: #selector(searchButtonTapped(_:)), for: .touchUpInside
         )

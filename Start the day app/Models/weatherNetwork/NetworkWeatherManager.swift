@@ -27,26 +27,23 @@ final class NetworkWeatherManager {
         let session = URLSession(configuration: .default)
 
         let task = session.dataTask(with: url) { data, _, _ in
-            if let data = data {
-                if let currentWeather = self.parseJSON(withData: data) {
+            if let data, let currentWeather = self.parseJSON(withData: data) {
                     self.onComplition?(currentWeather)
-                }
             }
         }
         task.resume()
     }
 
     private func parseJSON(withData data: Data) -> CurrentWeather? {
-        let decoder = JSONDecoder()
         do {
-            let currentWeatherData = try decoder.decode(CurrentWeatherData.self, from: data)
+            let currentWeatherData = try JSONDecoder().decode(CurrentWeatherData.self, from: data)
             guard let currentWeather = CurrentWeather(currentWeatherData: currentWeatherData) else {
                 return nil
             }
             return currentWeather
         } catch let error as NSError {
             print(error.localizedDescription)
+            return nil
         }
-        return nil
     }
 }
